@@ -1,0 +1,61 @@
+═══════════════════════════════════════════════════════════
+  🚨 PORTFOLIO 500 ERROR - QUICK FIX 🚨
+═══════════════════════════════════════════════════════════
+
+PROBLEM: Portfolio detail page shows 500 Internal Server Error
+
+SOLUTION: Restart your dev server (3 steps)
+
+┌─────────────────────────────────────────────────────────┐
+│ STEP 1: STOP SERVER                                     │
+│ Press Ctrl+C in your terminal                           │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│ STEP 2: DELETE .next FOLDER                             │
+│ Option A: Delete in File Explorer                       │
+│ Option B: Run: rmdir /s /q .next                        │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│ STEP 3: RESTART SERVER                                  │
+│ Run: npm run dev                                         │
+└─────────────────────────────────────────────────────────┘
+
+THEN TEST:
+1. Go to http://localhost:3000
+2. Scroll to Portfolio section
+3. Click any portfolio card
+4. Detail page should load ✅
+
+═══════════════════════════════════════════════════════════
+  WHY THIS WORKS
+═══════════════════════════════════════════════════════════
+
+The .next folder contains Next.js build cache. When corrupted,
+it causes 500 errors and 404s for chunk files. Deleting it
+forces Next.js to rebuild everything fresh.
+
+The portfolio detail page now uses dynamic imports with
+ssr: false, which prevents server-side rendering issues.
+
+═══════════════════════════════════════════════════════════
+  WHAT'S BEEN FIXED
+═══════════════════════════════════════════════════════════
+
+✅ Portfolio cards are clickable
+✅ Navigate to /portfolio/[id] on click
+✅ Detail page uses no-SSR dynamic import
+✅ Image carousel auto-advances (5 seconds)
+✅ All project info displays correctly
+✅ Bilingual support (EN/ID)
+✅ Fully responsive design
+
+═══════════════════════════════════════════════════════════
+
+For detailed documentation, see:
+- RESTART-INSTRUCTIONS.md (step-by-step guide)
+- PORTFOLIO-COMPLETE.md (full feature list)
+- PORTFOLIO-FIX.md (technical details)
+
+═══════════════════════════════════════════════════════════

@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  firstName     String
+  lastName      String
+  password      String
+  role          String    @default("EMPLOYEE") // SUPER_ADMIN, ADMIN, HR, MANAGER, EMPLOYEE
+  avatar        String?
+  phone         String?
+  address       String?
+  dateOfBirth   DateTime?
+  startDate     DateTime  @default(now())
+  status        String    @default("ACTIVE") // ACTIVE, INACTIVE, PENDING, TERMINATED
+  
+  // Relations
+  departmentId  String?
+  department    Department? @relation(fields: [departmentId], references: [id])
+  managedDepartments Department[] @relation("DepartmentManager")
+  
+  // Activity tracking
+  activities    Activity[]
+  createdActivities Activity[] @relation("ActivityCreator")
+  
+  // Leave requests
+  leaveRequests LeaveRequest[]
+  
+  // Expense reports
+  expenseReports ExpenseReport[]
+  
+  // Performance reviews
+  performanceReviews PerformanceReview[] @relation("ReviewSubject")
+  conductedReviews   PerformanceReview[] @relation("ReviewConductor")
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@map("users")
+}
+
+model Department {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  budget      Float    @default(0)
+  
+  // Relations
+  managerId   String?
+  manager     User?    @relation("DepartmentManager", fields: [managerId], references: [id])
+  employees   User[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("departments")
+}
+
+model Activity {
+  id          String      @id @default(cuid())
+  type        String      // USER_CREATED, USER_UPDATED, etc.
+  title       String
+  description String?
+  metadata    String?     // JSON string for additional data
+  
+  // Relations
+  userId      String?
+  user        User?       @relation(fields: [userId], references: [id])
+  createdById String
+  createdBy   User        @relation("ActivityCreator", fields: [createdById], references: [id])
+  
+  createdAt   DateTime    @default(now())
+  
+  @@map("activities")
+}
+
+model LeaveRequest {
+  id          String      @id @default(cuid())
+  type        String      // VACATION, SICK, PERSONAL, etc.
+  startDate   DateTime
+  endDate     DateTime
+  reason      String?
+  status      String      @default("PENDING") // PENDING, APPROVED, REJECTED, CANCELLED
+  approvedBy  String?
+  approvedAt  DateTime?
+  
+  // Relations
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@map("leave_requests")
+}
+
+model ExpenseReport {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  amount      Float
+  category    String
+  receiptUrl  String?
+  status      String      @default("PENDING") // PENDING, APPROVED, REJECTED, CANCELLED
+  approvedBy  String?
+  approvedAt  DateTime?
+  
+  // Relations
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@map("expense_reports")
+}
+
+model PerformanceReview {
+  id            String   @id @default(cuid())
+  period        String   // e.g., "Q1 2024", "2024 Annual"
+  overallRating Int      // 1-5 scale
+  goals         String?  // JSON string
+  achievements  String?  // JSON string
+  feedback      String?
+  status        String   @default("DRAFT") // DRAFT, IN_PROGRESS, COMPLETED, ARCHIVED
+  
+  // Relations
+  employeeId    String
+  employee      User     @relation("ReviewSubject", fields: [employeeId], references: [id])
+  reviewerId    String
+  reviewer      User     @relation("ReviewConductor", fields: [reviewerId], references: [id])
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("performance_reviews")
+}
+
+model CompanySettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  
+  updatedAt   DateTime @updatedAt
+  
+  @@map("company_settings")
+}
