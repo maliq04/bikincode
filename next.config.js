@@ -9,10 +9,7 @@ const nextConfig = {
   env: {
     CUSTOM_KEY: 'my-value',
   },
-  // Exclude API routes from static generation
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
-  },
+  serverExternalPackages: ['@prisma/client', 'bcryptjs'],
 }
 
 module.exports = nextConfig
