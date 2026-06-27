@@ -13,10 +13,6 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
   },
-  // Skip pre-rendering for API routes that require DB
-  outputFileTracingExcludes: {
-    '*': ['./prisma/dev.db'],
-  },
 }
 
 module.exports = nextConfig
