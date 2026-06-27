@@ -134,7 +134,7 @@ export function Footer() {
               <div className="flex">
                 <input
                   type="email"
-                  placeholder={t('yourEmail')}
+                  placeholder={t('newsletterEmail')}
                   className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-primary-500 text-sm"
                 />
                 <button className="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-r-lg transition-colors">

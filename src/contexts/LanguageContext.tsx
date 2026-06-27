@@ -96,7 +96,7 @@ const translations = {
     quickLinks: 'Quick Links',
     followUs: 'Follow Us',
     subscribeNewsletter: 'Subscribe to Newsletter',
-    yourEmail: 'Your email',
+    newsletterEmail: 'Your email',
     allRightsReserved: 'All rights reserved.',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
@@ -104,7 +104,6 @@ const translations = {
     // Common
     readMore: 'Read More',
     viewAll: 'View All',
-    sendMessage: 'Send Message',
     // Marketplace
     marketplaceTitle: 'Marketplace',
     marketplaceSubtitle: 'Discover and purchase premium digital solutions for your business.',
@@ -205,7 +204,7 @@ const translations = {
     quickLinks: 'Tautan Cepat',
     followUs: 'Ikuti Kami',
     subscribeNewsletter: 'Berlangganan Newsletter',
-    yourEmail: 'Email Anda',
+    newsletterEmail: 'Email Anda',
     allRightsReserved: 'Hak cipta dilindungi.',
     privacyPolicy: 'Kebijakan Privasi',
     termsOfService: 'Syarat Layanan',
@@ -213,7 +212,6 @@ const translations = {
     // Common
     readMore: 'Selengkapnya',
     viewAll: 'Lihat Semua',
-    sendMessage: 'Kirim Pesan',
     // Marketplace
     marketplaceTitle: 'Marketplace',
     marketplaceSubtitle: 'Temukan dan beli solusi digital premium untuk bisnis Anda.',
