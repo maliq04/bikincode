@@ -6,22 +6,6 @@ export default withAuth(
     const { pathname } = req.nextUrl
     const token = req.nextauth.token
 
-    // Allow access to business website pages without authentication
-    const publicPaths = [
-      '/',
-      '/portfolio',
-      '/marketplace',
-      '/affiliate',
-      '/about',
-      '/services',
-      '/blog',
-      '/contact'
-    ]
-
-    if (publicPaths.some(path => pathname.startsWith(path))) {
-      return NextResponse.next()
-    }
-
     // Redirect to signin if not authenticated and trying to access protected routes
     if (!token && (pathname.startsWith('/admin') || pathname.startsWith('/employee'))) {
       return NextResponse.redirect(new URL('/auth/signin', req.url))
@@ -41,19 +25,14 @@ export default withAuth(
       }
     }
 
-    if (token && pathname.startsWith('/employee')) {
-      // All authenticated users can access employee portal
-      return NextResponse.next()
-    }
-
     return NextResponse.next()
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl
-        
-        // Allow access to public business website routes
+
+        // Allow all public routes — no auth required
         const publicPaths = [
           '/',
           '/portfolio',
@@ -63,14 +42,14 @@ export default withAuth(
           '/services',
           '/blog',
           '/contact',
-          '/auth/'
+          '/auth',   // covers /auth/signin, /auth/error, etc.
         ]
 
-        if (publicPaths.some(path => pathname.startsWith(path))) {
+        if (publicPaths.some(path => pathname === path || pathname.startsWith(path + '/') || pathname.startsWith(path + '?'))) {
           return true
         }
 
-        // Require authentication for protected routes
+        // Require authentication for /admin and /employee only
         return !!token
       },
     },
