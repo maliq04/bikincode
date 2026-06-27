@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { database } from '@/lib/firebase'
 import { ref, get, update } from 'firebase/database'
 
+export const dynamic = 'force-dynamic'
+
 // Default about data
 const defaultAboutData = {
   companyName: {

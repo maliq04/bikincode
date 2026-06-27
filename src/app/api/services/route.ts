@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { database } from '@/lib/firebase'
 import { ref, get, set, remove, push } from 'firebase/database'
 
+export const dynamic = 'force-dynamic'
+
 // GET - Fetch all services
 export async function GET() {
   try {

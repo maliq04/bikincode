@@ -4,6 +4,8 @@ import { ref, set, get, update } from 'firebase/database'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 // Use Firebase Realtime Database only
 export async function GET() {
   try {

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { storage } from '@/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     // Test Firebase Storage connection

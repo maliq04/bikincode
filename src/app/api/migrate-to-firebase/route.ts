@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { database } from '@/lib/firebase'
 import { ref, set, get } from 'firebase/database'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST() {
   try {
     console.log('Initializing Firebase settings...')

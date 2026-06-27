@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import bcrypt from 'bcryptjs'
 
+export const dynamic = 'force-dynamic'
+
 const createEmployeeSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1),
